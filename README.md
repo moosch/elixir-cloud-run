@@ -52,12 +52,49 @@ Set the project secret
 
 [x] - Push to Github
 [ ] - -> Run tests with BuildKite
-[ ] - -> Build Docker Image in BuildKite
-[ ] - -> Login to Docker Hub in BuildKite
-[ ] - -> Push image to Docker Hub
+[x] - -> Build Docker Image in BuildKite
+[x] - -> Login to Docker Hub in BuildKite
+[x] - -> Push image to Docker Hub
+<!-- [ ] - -> Pull image from Docker Hub or use local artifact? -->
 [ ] - -> Pull image from Docker Hub or use local artifact?
 [ ] - -> Login to Google Cloud Run in BuildKite
 [ ] - -> Push image to Google Cloud Run
+
+
+
+#### Google Cloud Registry
+
+Create and get key
+```
+gcloud iam service-accounts create ${KEY_NAME} — display-name ${KEY_DISPLAY_NAME}
+gcloud iam service-accounts list
+gcloud iam service-accounts keys create — iam-account ${KEY_NAME}@${PROJECT}.iam.gserviceaccount.com key.json
+```
+
+This outputs a file `key.json` which is used as input for docker login cmd. This file should be present where push is needed.
+
+
+
+
+
+<!--  -->
+Configure docker to use the gcloud command-line tool as a credential helper (only need to run once)
+`gcloud auth configure-docker`
+
+Tag image
+`docker tag [PROJECT_NAME] gcr.io/[PROJECT-ID]/[PROJECT_NAME]:tag1`
+
+Push image to GCR
+`docker push gcr.io/[PROJECT-ID]/[PROJECT_NAME]:tag1`
+
+
+
+
+
+Host GCR images on asia.gcr.io
+
+docker tag moosch/elixir-phx-container asia.gcr.io:1.0
+gcloud docker — push gcr.io/your-project-id/<project-id>/<sample-image-name>:1.0
 
 
 

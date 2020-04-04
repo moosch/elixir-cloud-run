@@ -1,16 +1,25 @@
 steps:
   - label: ":whale: Docker"
     command:
-      - echo "Docker login, build and push"
-      - "docker build -t moosch/elixir-phx-container:1.0 ."
-      - "docker push moosch/elixir-phx-container:1.0"
-    plugins:
-      - docker-login#v2.0.1:
-          username: moosch
-          password-env: DOCKER_LOGIN_PASSWORD
-      # - docker#v3.5.0:
-      #     image: "moosch/elixir-phx-container:latest"
-      #     always-pull: true 
+      - echo "Building image..."
+      - "docker build -t gcr.io/sandbox-1577752430890/elixir-phx-container:1.0 ."
+      # - "docker build -t moosch/elixir-phx-container:1.0 ."
+      - echo "Pushing to GCR..."
+      - "docker push gcr.io/sandbox-1577752430890/elixir-phx-container:1.0"
+
+
+  # - label: ":whale: Docker"
+  #   command:
+  #     - echo "Docker login, build and push"
+  #     - "docker build -t moosch/elixir-phx-container:1.0 ."
+  #     - "docker push moosch/elixir-phx-container:1.0"
+  #   plugins:
+  #     - docker-login#v2.0.1:
+  #         username: moosch
+  #         password-env: DOCKER_LOGIN_PASSWORD
+  #     # - docker#v3.5.0:
+  #     #     image: "moosch/elixir-phx-container:latest"
+  #     #     always-pull: true 
 
   - label: ":shipit: Deploy"
     command: echo "All done!"
