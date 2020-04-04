@@ -45,3 +45,16 @@ Set the project secret
 ### Reference
 
 [https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/](https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/)
+
+
+
+#### Buildkite
+
+Trigger a pipeline with BK REST api:
+```bash
+curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizations/moosch/pipelines/elixir-cloud-run/builds" \
+  -X "POST" \
+  -F "commit=HEAD" \
+  -F "branch=master" \
+  -F "message=First build :rocket:"
+```
