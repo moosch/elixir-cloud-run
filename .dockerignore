@@ -1,0 +1,11 @@
+_build/
+.elixir_ls/
+assets/
+deps/
+test/
+
+.formatter.exs
+.gitignore
+Dockerfile
+erl_crash.dump
+README.md

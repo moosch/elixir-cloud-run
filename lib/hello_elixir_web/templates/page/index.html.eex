@@ -1,0 +1,7 @@
+<div class="flex-container">
+  <div>
+    <h2 style="text-align:center;">An Elixir Phoenix App running in Docker yo!</h2>
+    <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+    <h4 style="text-align:center;>Custom env: <%= Application.get_env(:hello_elixir, :cool_text) %></h4>
+  </div>
+</div>
