@@ -58,3 +58,6 @@ curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizatio
   -F "branch=master" \
   -F "message=First build :rocket:"
 ```
+
+Start the local agent:
+`buildkite-agent start`
