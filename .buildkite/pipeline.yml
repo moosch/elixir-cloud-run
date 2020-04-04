@@ -1,10 +1,5 @@
 steps:
-  - label: ":whale: Build Docker image"
-    command:
-      - "docker build -t moosch/elixir-phx-container:1.0 ."
-      - "docker push moosch/elixir-phx-container:1.0"
-
-  - label: ":whale: First step"
+  - label: ":whale: Docker"
     command:
       - echo "Docker login, build and push"
       - "docker build -t moosch/elixir-phx-container:1.0 ."
