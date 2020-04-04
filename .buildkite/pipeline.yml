@@ -6,10 +6,11 @@ steps:
       - echo "Pushing to GCR..."
       - "docker push asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:1.0"
 
-  # - label: "☁ :cloud: Push to Cloud Run"
-  #   command:
-  #     - echo "Pushing to Cloud Run"
-  #     - "gcloud beta run deploy elixir-phx-container --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:1.0 --region asia-east1 --platform managed --allow-unauthenticated --quiet"
+  - label: "☁ :cloud: Push to Cloud Run"
+    command:
+      - echo "Pushing to Cloud Run"
+      # - "gcloud beta run deploy elixir-phx-container --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:1.0 --region asia-east1 --platform managed --allow-unauthenticated --quiet"
+      - "gcloud run deploy $GCLOUD_PROJECT_ID --port=8080 --platform=managed --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:latest --region=asia-east1 --set-env-vars=[SECRET_KEY_BASE=$SECRET_KEY_BASE,APP_PORT=8080] --allow-unauthenticated"
 
   - label: ":rocket: Deploy"
     command: echo "All done!"
