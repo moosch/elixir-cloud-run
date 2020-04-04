@@ -1,66 +1,9 @@
 # Hello Elixir
 
-Simple test Phoenix app to deploy in a container
-
-## Compile steps
-
-### Set environment
-
-Set the project secret
-
-`mix phx.gen.secret`
-`REALLY_LONG_SECRET`
-`export SECRET_KEY_BASE=REALLY_LONG_SECRET`
-
-### Initial setup
-
-`mix deps.get --only prod`
-`MIX_ENV=prod mix compile`
-
-### Compile assets
-
-`npm run deploy --prefix ./assets`
-`mix phx.digest`
-
-### Create release
-
-`MIX_ENV=prod mix release`
+Simple test Phoenix app to deploy in a container.
 
 
-### Build image
-- `docker build -t elixir-container .`
-
-
-### Run the app in the container
-
-`docker run --publish 4000:4000 --env COOL_TEXT='ELIXIR ROCKS!!!!' --env SECRET_KEY_BASE=$(mix phx.gen.secret) --env APP_PORT=4000 elixir-container:latest`
-
-
-### TODO
-
-[ ] - Split this into steps within a bash/make script
-[ ] - Get runtime env vars working
-
-
-### Reference
-
-[https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/](https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/)
-
-
-
-#### CI/CD Process
-
-[x] - Push to Github
-[ ] - -> Run tests with BuildKite
-[x] - -> Build Docker Image in BuildKite
-[x] - -> Login to Docker Hub in BuildKite
-[x] - -> Push image to Docker Hub
-<!-- [ ] - -> Pull image from Docker Hub or use local artifact? -->
-[ ] - -> Pull image from Docker Hub or use local artifact?
-[ ] - -> Login to Google Cloud Run in BuildKite
-[ ] - -> Push image to Google Cloud Run
-
-
+## Prerequisites
 
 #### Google Cloud
 
@@ -101,14 +44,67 @@ Start the local agent:
 `buildkite-agent start`
 
 
+## Local development
 
-#### Local Docker Dev
+### Compile steps
 
-Build image version
-`docker build -t moosch/elixir-phx-container:1.0 .`
+#### Set environment
 
-Deploy image version
-`docker push moosch/elixir-phx-container:1.0`
+Set the project secret
 
-Pull version
-`docker pull moosch/elixir-phx-container:1.0`
+`mix phx.gen.secret`
+`REALLY_LONG_SECRET`
+`export SECRET_KEY_BASE=REALLY_LONG_SECRET`
+
+#### Initial setup
+
+`mix deps.get --only prod`
+`MIX_ENV=prod mix compile`
+
+#### Compile assets
+
+`npm run deploy --prefix ./assets`
+`mix phx.digest`
+
+#### Create release
+
+`MIX_ENV=prod mix release`
+
+
+#### Build image
+- `docker build -t elixir-container .`
+
+
+#### Run the app in the container
+
+`docker run --publish 4000:4000 --env COOL_TEXT='ELIXIR ROCKS!!!!' --env SECRET_KEY_BASE=$(mix phx.gen.secret) --env APP_PORT=4000 elixir-container:latest`
+
+
+
+## CI/CD Process
+
+[x] - Push to Github
+[x] - -> Run tests with BuildKite
+[x] - -> Build Docker Image in BuildKite
+[x] - -> Push image to Google Cloud Run
+[x] - -> Run image deployment from GCR to Cloud Run
+
+
+
+### TODO
+
+[ ] - Secure deployment from GCR to Cloud Run rather than an `--allow-unauthenticated`
+[ ] - Split this into steps within a bash/make script
+[ ] - Get runtime env vars working
+
+
+### Dockerfile Reference
+
+[https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/](https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/)
+
+
+### License
+
+MIT Licensed. Use all you like at your own risky fun. Go nuts.
+
+Happy coding λ
