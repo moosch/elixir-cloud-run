@@ -62,43 +62,47 @@ Set the project secret
 
 
 
-#### Google Cloud Registry
+#### Google Cloud
 
-Create and get key
-```
-gcloud iam service-accounts create ${KEY_NAME} — display-name ${KEY_DISPLAY_NAME}
-gcloud iam service-accounts list
-gcloud iam service-accounts keys create — iam-account ${KEY_NAME}@${PROJECT}.iam.gserviceaccount.com key.json
-```
+You will need the following:
 
-This outputs a file `key.json` which is used as input for docker login cmd. This file should be present where push is needed.
+**Google Cloud account**
+**Billing setup on Google Cloud account**
+**Enable Cloud Run API**
+**Enable Google Container Registry (GCR) API**
 
 
+#### Buildkite
 
+In this example our Agent will be running on our local machine (super low cost).
+To do this, set up a [local agent](https://buildkite.com/docs/agent/v3/installation) with Buildkite
 
+Agent requirements:
 
-<!--  -->
-Configure docker to use the gcloud command-line tool as a credential helper (only need to run once)
+**Bash**
+**Docker**
+**gcloud CLI**
+
+Firstly [login](https://cloud.google.com/sdk/gcloud/reference/auth/login) to your Google Cloud account with the gcloud CLI
+`gcloud auth login`
+
+First configure docker to use the gcloud command-line tool as a credential helper (only need to run once)
 `gcloud auth configure-docker`
 
-Tag image
-`docker tag [PROJECT_NAME] gcr.io/[PROJECT-ID]/[PROJECT_NAME]:tag1`
+Set any Agent environment variables required for build (Mac OS)
+`vim /usr/local/etc/buildkite-agent/hooks/environment`
+Add env vars
+```
+export DOCKER_LOGIN_PASSWORD=supersecretpassword
+export GCLOUD_PROJECT_ID=project-id
+```
 
-Push image to GCR
-`docker push gcr.io/[PROJECT-ID]/[PROJECT_NAME]:tag1`
-
-
-
-
-
-Host GCR images on asia.gcr.io
-
-docker tag moosch/elixir-phx-container asia.gcr.io:1.0
-gcloud docker — push gcr.io/your-project-id/<project-id>/<sample-image-name>:1.0
+Start the local agent:
+`buildkite-agent start`
 
 
 
-#### Docker
+#### Local Docker Dev
 
 Build image version
 `docker build -t moosch/elixir-phx-container:1.0 .`
@@ -108,25 +112,3 @@ Deploy image version
 
 Pull version
 `docker pull moosch/elixir-phx-container:1.0`
-
-
-#### Buildkite
-
-Trigger a pipeline with BK REST api:
-```bash
-curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizations/moosch/pipelines/elixir-cloud-run/builds" \
-  -X "POST" \
-  -F "commit=HEAD" \
-  -F "branch=master" \
-  -F "message=First build :rocket:"
-```
-
-
-
-Set any Agent environment variables required for build
-`vim /usr/local/etc/buildkite-agent/hooks/environment`
-
-Add `export DOCKER_LOGIN_PASSWORD=supersecretpassword`
-
-Start the local agent:
-`buildkite-agent start`
