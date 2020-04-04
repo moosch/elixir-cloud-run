@@ -12,7 +12,5 @@ steps:
       #     image: "moosch/elixir-phx-container:latest"
       #     always-pull: true 
 
-  - wait
-
   - label: ":shipit: Deploy"
     command: echo "All done!"
