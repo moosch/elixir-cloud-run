@@ -48,6 +48,18 @@ Set the project secret
 
 
 
+#### Docker
+
+Build image version
+`docker build -t moosch/elixir-phx-container:1.0 .`
+
+Deploy image version
+`docker push moosch/elixir-phx-container:1.0`
+
+Pull version
+`docker pull moosch/elixir-phx-container:1.0`
+
+
 #### Buildkite
 
 Trigger a pipeline with BK REST api:

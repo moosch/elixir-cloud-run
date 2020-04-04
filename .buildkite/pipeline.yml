@@ -1,3 +1,12 @@
 steps:
-  - label: "First step"
-    command: echo "Hello!"
+  - label: ":whale: First step"
+    command: echo "Docker login"
+    plugins:
+      - docker-login#v2.0.1:
+          username: moosch
+          password-env: DOCKER_LOGIN_PASSWORD
+
+  - wait
+
+  - label: ":shipit: Deploy"
+    command: echo "All done!"
