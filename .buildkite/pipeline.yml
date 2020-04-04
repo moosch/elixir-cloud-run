@@ -7,12 +7,17 @@ steps:
       - "docker push asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT"
 
   - wait: ~
-    continue_on_failure: false
+    continue_on_failure: true
+
+  - label: ":shower: Cleanup Docker image"
+    command:
+      - echo "Pushing to Cloud Run"
+      # - "docker rmi $BUILDKITE_COMMIT"
 
   - label: ":cloud: Push to Cloud Run"
     command:
       - echo "Pushing to Cloud Run"
-      - "gcloud run deploy $GCLOUD_PROJECT_ID --port=8080 --platform=managed --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT --region=asia-east1 --set-env-vars= SECRET_KEY_BASE=$SECRET_KEY_BASE,APP_PORT=8080 --allow-unauthenticated"
+      - "gcloud run deploy $GCLOUD_SERVICE_NAME --port 8080 --platform managed --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT --region asia-east1 --set-env-vars SECRET_KEY_BASE=$SECRET_KEY_BASE,APP_PORT=8080,COOL_TEXT=Boom --allow-unauthenticated"
 
   - wait: ~
     continue_on_failure: false

@@ -38,6 +38,7 @@ Add env vars
 ```
 export DOCKER_LOGIN_PASSWORD=supersecretpassword
 export GCLOUD_PROJECT_ID=project-id
+export GCLOUD_SERVICE_NAME=cloud-run-service-name
 ```
 
 Start the local agent:
