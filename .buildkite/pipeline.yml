@@ -2,15 +2,17 @@ steps:
   - label: ":whale: Docker"
     command:
       - echo "Building image..."
-      - "docker build -t asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:1.0 ."
+      - "docker build -t asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT ."
       - echo "Pushing to GCR..."
-      - "docker push asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:1.0"
+      - "docker push asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT"
 
-  - label: "☁ :cloud: Push to Cloud Run"
+  - label: ":cloud: Push to Cloud Run"
     command:
       - echo "Pushing to Cloud Run"
       # - "gcloud beta run deploy elixir-phx-container --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:1.0 --region asia-east1 --platform managed --allow-unauthenticated --quiet"
-      - "gcloud run deploy $GCLOUD_PROJECT_ID --port=8080 --platform=managed --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:latest --region=asia-east1 --set-env-vars=[SECRET_KEY_BASE=$SECRET_KEY_BASE,APP_PORT=8080] --allow-unauthenticated"
+      - "gcloud run deploy $GCLOUD_PROJECT_ID --port=8080 --platform=managed --image asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT --region=asia-east1 --set-env-vars=[SECRET_KEY_BASE=$SECRET_KEY_BASE,APP_PORT=8080] --allow-unauthenticated"
+      # BUILDKITE_COMMIT
+      # BUILDKITE_TAG
 
   - label: ":rocket: Deploy"
     command: echo "All done!"
