@@ -53,19 +53,27 @@ Start the local agent:
 
 Set the project secret
 
-`mix phx.gen.secret`
-`REALLY_LONG_SECRET`
-`export SECRET_KEY_BASE=REALLY_LONG_SECRET`
+```bash
+mix phx.gen.secret
+> REALLY_LONG_SECRET
+```
+```bash
+export SECRET_KEY_BASE=REALLY_LONG_SECRET
+```
 
 #### Initial setup
 
-`mix deps.get --only prod`
-`MIX_ENV=prod mix compile`
+```bash
+mix deps.get --only prod
+MIX_ENV=prod mix compile
+```
 
 #### Compile assets
 
-`npm run deploy --prefix ./assets`
-`mix phx.digest`
+```bash
+npm run deploy --prefix ./assets
+mix phx.digest
+```
 
 #### Create release
 
@@ -78,28 +86,28 @@ Set the project secret
 
 #### Run the app in the container
 
-`docker run --publish 4000:4000 --env COOL_TEXT='ELIXIR ROCKS!!!!' --env SECRET_KEY_BASE=$(mix phx.gen.secret) --env APP_PORT=4000 elixir-container:latest`
+`docker run --publish 4000:4000 --env COOL_TEXT='ELIXIR ROCKS!!!!' --env SECRET_KEY_BASE=SECRET_KEY_BASE --env APP_PORT=4000 elixir-container:latest`
 
 
 
 ## CI/CD Process
 
-[x] - Push to Github
-[x] - -> Run tests with BuildKite
-[x] - -> Build Docker Image in BuildKite
-[x] - -> Push image to Google Cloud Run
-[x] - -> Run image deployment from GCR to Cloud Run
+- [x] Push to Github
+- [x] -> Run tests with BuildKite
+- [x] -> Build Docker Image in BuildKite
+- [x] -> Push image to Google Cloud Run
+- [x] -> Run image deployment from GCR to Cloud Run
 
 
 
 ### TODO
 
-[ ] - Secure deployment from GCR to Cloud Run rather than an `--allow-unauthenticated`
-[ ] - Split this into steps within a bash/make script
-[ ] - Get runtime env vars working
+- [ ] Secure deployment from GCR to Cloud Run rather than an `--allow-unauthenticated`
+- [ ] Split this into steps within a bash/make script
+- [ ] Get runtime env vars working
 
 
-### Dockerfile Reference
+### Elixir Dockerfile Reference
 
 [https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/](https://akoutmos.com/post/multipart-docker-and-elixir-1.9-releases/)
 
