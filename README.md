@@ -48,6 +48,19 @@ Set the project secret
 
 
 
+#### CI/CD Process
+
+[x] - Push to Github
+[ ] - -> Run tests with BuildKite
+[ ] - -> Build Docker Image in BuildKite
+[ ] - -> Login to Docker Hub in BuildKite
+[ ] - -> Push image to Docker Hub
+[ ] - -> Pull image from Docker Hub or use local artifact?
+[ ] - -> Login to Google Cloud Run in BuildKite
+[ ] - -> Push image to Google Cloud Run
+
+
+
 #### Docker
 
 Build image version
@@ -70,6 +83,13 @@ curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizatio
   -F "branch=master" \
   -F "message=First build :rocket:"
 ```
+
+
+
+Set any Agent environment variables required for build
+`vim /usr/local/etc/buildkite-agent/hooks/environment`
+
+Add `export DOCKER_LOGIN_PASSWORD=supersecretpassword`
 
 Start the local agent:
 `buildkite-agent start`
