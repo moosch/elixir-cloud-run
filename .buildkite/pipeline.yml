@@ -11,8 +11,8 @@ steps:
 
   - label: ":shower: Cleanup Docker image"
     command:
-      - echo "Pushing to Cloud Run"
-      # - "docker rmi $BUILDKITE_COMMIT"
+      - echo "Remove local image"
+      - "docker rmi asia.gcr.io/$GCLOUD_PROJECT_ID/elixir-phx-container:$BUILDKITE_COMMIT"
 
   - label: ":cloud: Push to Cloud Run"
     command:
